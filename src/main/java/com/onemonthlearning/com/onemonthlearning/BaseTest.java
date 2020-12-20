@@ -1,8 +1,11 @@
 package com.onemonthlearning.com.onemonthlearning;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.InvalidElementStateException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -10,37 +13,36 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class BaseTest {
 	public static RemoteWebDriver driver;
 
-	public RemoteWebDriver launchBrowser(String browser) {
+	public RemoteWebDriver launchBrowser(String browser, String url) {
 		DesiredCapabilities dc = new DesiredCapabilities();
 		dc.setBrowserName(browser);
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-notifications");
-		/*if (browser.equalsIgnoreCase("chrome")) {
+		options.addArguments("--incognito");
+		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe");
 			driver = new ChromeDriver(options);
-		} else {
+		} else if (browser.equalsIgnoreCase("gecko")) {
 			System.setProperty("webdriver.gecko.driver", "./drivers/geckodriver.exe");
 			driver = new FirefoxDriver();
-		}*/
-		switch(browser) {
-		case ("chrome"):
-			System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe");
-			return driver = new ChromeDriver(options);
-		case ("edge"):
+		} else {
 			System.setProperty("webdriver.edge.driver", "./drivers/msedgedriver.exe");
-			return driver = new EdgeDriver();
+			driver = new EdgeDriver();
 		}
-	
-	
-		
+
+		driver.get(url);
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		System.out.println("Browser launched and maximises successfully.");
+
 		return null;
-		
 
 	}
 
@@ -63,32 +65,35 @@ public class BaseTest {
 		} catch (NoSuchElementException e) {
 			System.out.println("Exception occured on locate elements : " + locValue);
 
-		}catch (WebDriverException e) {
-			System.out.println("Exception occured on locate elements : "+ locValue);
+		} catch (WebDriverException e) {
+			System.out.println("Exception occured on locate elements : " + locValue);
 
 		}
 		return null;
 	}
-	
+
 	public void typeEnterTab(WebElement ele, String data) {
 		try {
 			ele.clear();
 			ele.sendKeys(data);
 			ele.sendKeys(Keys.ENTER);
 			ele.sendKeys(Keys.TAB);
+			System.out.println("Successfully typed in Element : "+ ele);
 		} catch (InvalidElementStateException e) {
 			System.out.println("Invalid element exception occured on element type");
+
 		} catch (WebDriverException e) {
 			System.out.println("Invalid element exception occured on element type");
 
 		}
 	}
-	
+
 	public void typeEnter(WebElement ele, String data) {
 		try {
 			ele.clear();
 			ele.sendKeys(data);
 			ele.sendKeys(Keys.ENTER);
+			System.out.println("Successfully typed in Element : "+ ele);
 		} catch (InvalidElementStateException e) {
 			System.out.println("Invalid element exception occured on element type");
 		} catch (WebDriverException e) {
@@ -96,19 +101,19 @@ public class BaseTest {
 
 		}
 	}
-	
-	
+
 	public void clickElement(WebElement ele) {
 		try {
 			ele.click();
+			System.out.println("Element Clicked Successfully: " +ele);
 		} catch (InvalidElementStateException e) {
-			System.out.println("Exception occured on element click : "+ ele);
+			System.out.println("Exception occured on element click : " + ele);
 		} catch (WebDriverException e) {
-			System.out.println("Exception occured on element click: "+ ele);
+			System.out.println("Exception occured on element click: " + ele);
 
 		}
 	}
-	
+
 	public String getText(WebElement ele) {
 		String bReturn = "";
 		try {
@@ -119,5 +124,29 @@ public class BaseTest {
 		}
 		return bReturn;
 	}
+
+	public void mouseOverToElement(WebElement ele) {
+		Actions action = new Actions(driver);
+		action.moveToElement(ele).perform();
+		
+	}
 	
+	public void mouseOverToElementAndClick(WebElement ele) {
+		Actions action = new Actions(driver);
+		action.moveToElement(ele).click().build().perform();
+	}
+	
+	public void pagedown() {
+        //To scroll the page till the element is found		
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,500)");
+        //js.executeScript("arguments[0].scrollIntoView();", ele);
+
+	}
+
+	public int elementCount(String locatorvalue) {
+		List<WebElement> elementlist =driver.findElementsByXPath(locatorvalue);
+		int eleCount = elementlist.size();
+		return eleCount;
+	}
 }
