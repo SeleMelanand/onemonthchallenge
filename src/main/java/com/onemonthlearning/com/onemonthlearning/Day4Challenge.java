@@ -19,10 +19,7 @@ public class Day4Challenge extends BaseTest {
 	public void printBusCount() {
 		/* In Redbus website, search for buses between bangalore and chennai and print
 		 the count of buses getting displayed*/
-		launchBrowser("chrome");
-		driver.get("https://www.redbus.in/");
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		launchBrowser("chrome","https://www.redbus.in/");
 		typeEnter(locateElement("id", "src"), "Bangalore");
 		typeEnterTab(locateElement("id", "dest"), "Chennai");
 		clickElement(locateElement("xpath", "//label[text()='Date']"));
