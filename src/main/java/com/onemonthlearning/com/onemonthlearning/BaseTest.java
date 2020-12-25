@@ -78,7 +78,7 @@ public class BaseTest {
 			ele.sendKeys(data);
 			ele.sendKeys(Keys.ENTER);
 			ele.sendKeys(Keys.TAB);
-			System.out.println("Successfully typed in Element : "+ ele);
+			System.out.println("Successfully typed in Element : " + ele);
 		} catch (InvalidElementStateException e) {
 			System.out.println("Invalid element exception occured on element type");
 
@@ -93,7 +93,7 @@ public class BaseTest {
 			ele.clear();
 			ele.sendKeys(data);
 			ele.sendKeys(Keys.ENTER);
-			System.out.println("Successfully typed in Element : "+ ele);
+			System.out.println("Successfully typed in Element : " + ele);
 		} catch (InvalidElementStateException e) {
 			System.out.println("Invalid element exception occured on element type");
 		} catch (WebDriverException e) {
@@ -105,7 +105,7 @@ public class BaseTest {
 	public void clickElement(WebElement ele) {
 		try {
 			ele.click();
-			System.out.println("Element Clicked Successfully: " +ele);
+			System.out.println("Element Clicked Successfully: " + ele);
 		} catch (InvalidElementStateException e) {
 			System.out.println("Exception occured on element click : " + ele);
 		} catch (WebDriverException e) {
@@ -128,25 +128,50 @@ public class BaseTest {
 	public void mouseOverToElement(WebElement ele) {
 		Actions action = new Actions(driver);
 		action.moveToElement(ele).perform();
-		
+
 	}
-	
+
 	public void mouseOverToElementAndClick(WebElement ele) {
 		Actions action = new Actions(driver);
 		action.moveToElement(ele).click().build().perform();
 	}
-	
+
 	public void pagedown() {
-        //To scroll the page till the element is found		
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,500)");
-        //js.executeScript("arguments[0].scrollIntoView();", ele);
+		// To scroll the page till the element is found
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,500)");
+		// js.executeScript("arguments[0].scrollIntoView();", ele);
 
 	}
 
 	public int elementCount(String locatorvalue) {
-		List<WebElement> elementlist =driver.findElementsByXPath(locatorvalue);
+		List<WebElement> elementlist = driver.findElementsByXPath(locatorvalue);
 		int eleCount = elementlist.size();
 		return eleCount;
 	}
+
+	public void pageLoadedFully() {
+		// getthe state whether page is loading or not
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		String states = null;
+		do {
+			states = js.executeScript("return document.readyState").toString();
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				System.out.println("Exception occured while pageis loading.."+ e);
+			}
+			System.out.println("pageloaded!!!: " + states);
+		} while (states == "complete");
+		System.out.println("pageloaded sucessfully");
+
+	}
+	
+	public List<WebElement> elementListByXpath(String xpathValue) {
+		List<WebElement> elementList = driver.findElementsByXPath(xpathValue);
+		return elementList;
+		
+	}
+	
+	
 }
