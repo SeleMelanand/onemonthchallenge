@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -16,6 +17,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseTest {
 	public static RemoteWebDriver driver;
@@ -25,7 +29,8 @@ public class BaseTest {
 		dc.setBrowserName(browser);
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-notifications");
-		options.addArguments("--incognito");
+		options.addArguments("disable-geolocation");
+		// options.addArguments("--incognito");
 		if (browser.equalsIgnoreCase("chrome")) {
 			System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver.exe");
 			driver = new ChromeDriver(options);
@@ -40,7 +45,7 @@ public class BaseTest {
 		driver.get(url);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		System.out.println("Browser launched and maximises successfully.");
+		System.out.println("Browser launched and maximized successfully.");
 
 		return null;
 
@@ -70,6 +75,10 @@ public class BaseTest {
 
 		}
 		return null;
+	}
+
+	public WebElement locateElementByXpath(String locValue) {
+		return driver.findElementByXPath(locValue);
 	}
 
 	public void typeEnterTab(WebElement ele, String data) {
@@ -126,8 +135,15 @@ public class BaseTest {
 	}
 
 	public void mouseOverToElement(WebElement ele) {
-		Actions action = new Actions(driver);
-		action.moveToElement(ele).perform();
+		try {
+			Actions action = new Actions(driver);
+			action.moveToElement(ele).perform();
+			System.out.println("Cursor moved to specific element : " + ele);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Exception occured while moving the cursor to specific element :" + e);
+		}
 
 	}
 
@@ -159,19 +175,34 @@ public class BaseTest {
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
-				System.out.println("Exception occured while pageis loading.."+ e);
+				System.out.println("Exception occured while pageis loading.." + e);
 			}
 			System.out.println("pageloaded!!!: " + states);
 		} while (states == "complete");
 		System.out.println("pageloaded sucessfully");
 
 	}
-	
+
 	public List<WebElement> elementListByXpath(String xpathValue) {
 		List<WebElement> elementList = driver.findElementsByXPath(xpathValue);
 		return elementList;
-		
+
 	}
-	
-	
+
+	public void acceptAlert() {
+		Alert alertobj = driver.switchTo().alert();
+		alertobj.accept();
+	}
+
+	public void waitForSpecElement(WebElement ele) {
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.visibilityOf(ele));
+	}
+
+	public void selectValuedd(WebElement ele, String ddvalue) {
+		Select selElement = new Select(ele);
+		selElement.selectByVisibleText(ddvalue);
+
+	}
+
 }
