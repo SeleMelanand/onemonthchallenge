@@ -1,13 +1,22 @@
 package com.onemonthlearning.com.onemonthlearning;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,6 +29,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class BaseTest {
 	public static RemoteWebDriver driver;
@@ -202,6 +215,24 @@ public class BaseTest {
 	public void selectValuedd(WebElement ele, String ddvalue) {
 		Select selElement = new Select(ele);
 		selElement.selectByVisibleText(ddvalue);
+
+	}
+
+	public void takeElementScreenShot(String name, WebElement element) {
+		File source = element.getScreenshotAs(OutputType.FILE);
+		try {
+			FileUtils.copyFile(source,
+					new File("./reports/images/" + name + ".jpg"));
+		} catch (WebDriverException | IOException e) {
+			System.out.println("Exception occured");
+		}
+	}
+	
+	public LocalDate takeSystemDate() {
+		/*SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyy");  
+	    Date date = new Date();  
+	    formatter.format(date);*/
+	    return java.time.LocalDate.now();
 
 	}
 
