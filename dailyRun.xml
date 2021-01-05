@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<test thread-count="3" name="Test">
+		<groups>
+			<run>
+				<include name="seleniumProgram" />
+			</run>
+		</groups>
+
+		<classes>
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day6Challenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day8Challenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day10Challenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day13JavaChallenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day17JavaChallenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day15Challenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day14JavaChallenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day4Challenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day2Challenge" />
+			<class
+				name="com.onemonthlearning.com.onemonthlearning.Day5Challenge" />
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
