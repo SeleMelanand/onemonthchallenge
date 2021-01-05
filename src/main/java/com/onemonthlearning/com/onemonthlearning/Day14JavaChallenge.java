@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class Day14JavaChallenge extends BaseTest {
 
-	@Test
+	@Test(groups = { "seleniumProgram"})
 	public void specificWatchSearch() {
 
 		launchBrowser("chrome", "https://www.snapdeal.com/");

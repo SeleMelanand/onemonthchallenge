@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 public class Day4Challenge extends BaseTest {
-	@Test
+	@Test(groups = { "seleniumProgram"})
 	public void printBusCount() {
 		/* In Redbus website, search for buses between bangalore and chennai and print
 		 the count of buses getting displayed*/

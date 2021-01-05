@@ -18,7 +18,7 @@ public class Day8Challenge extends BaseTest {
 
 	}
 
-	@Test
+	@Test(groups = { "seleniumProgram"})
 	public void compareProducts() {
 		launchBrowser("chrome", "https://www.flipkart.com/");
 		clickElement(locateElement("xpath", "//body[@class='fk-modal-visible']/div[2]//button"));

@@ -7,7 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class Day10Challenge extends BaseTest {
-	@Test
+	@Test(groups = { "seleniumProgram"})
 	public void searchProductAndSort() {
 		launchBrowser("chrome", "https://www.ajio.com/");
 		// clickElement(locateElementByXpath("//button[text()='Allow Location']"));
@@ -38,31 +38,28 @@ public class Day10Challenge extends BaseTest {
 		System.out.println(lessLowerCaseName + " :: " + lessLowerCaseName.length());
 
 		for (WebElement selectProductName : productlist) {
-			if(selectProductName.getText().equalsIgnoreCase(lessLowerCaseName)) {
+			if (selectProductName.getText().equalsIgnoreCase(lessLowerCaseName)) {
 				clickElement(selectProductName);
 				break;
 			}
-			
+
 		}
 		waitForSpecElement(locateElement("class", "header2"));
 		String itemCount = getText(locateElementByXpath("//div[@class='filter-container']/div/div[1]"));
 		String intialItemVal = itemCount.split(" ")[0].replace(",", "");
 		System.out.println(intialItemVal);
-		
+
 		clickElement(locateElementByXpath("//span[text()='size & fit']"));
-		
+
 		clickElement(locateElementByXpath("//input[@id=\"S\"]/../label"));
 		waitForSpecElement(locateElement("class", "header2"));
 		String itemCountAfterFilter = getText(locateElementByXpath("//div[@class='filter-container']/div/div[1]"));
 		String ItemValAfterFilter = itemCountAfterFilter.split(" ")[0].replace(",", "");
 		System.out.println(ItemValAfterFilter);
-		Assert.assertTrue(Integer.parseInt(ItemValAfterFilter)<Integer.parseInt(intialItemVal));
-	
+		Assert.assertTrue(Integer.parseInt(ItemValAfterFilter) < Integer.parseInt(intialItemVal));
+
 		selectValuedd(locateElementByXpath("//div[@class='filter-dropdown']/select"), "Discount");
-		
-		
-		
-		
+
 	}
 
 }

@@ -3,9 +3,9 @@ package com.onemonthlearning.com.onemonthlearning;
 import org.testng.annotations.Test;
 
 public class Day5Challenge {
-	@Test
+	@Test(groups = { "javaProgram"})
 	public void updatedString() {
-		String inputval = "askdjsdkqoweiqwoeiuqwo";
+		String inputval = "WelcomeIndia";
 		String outputval = null;
 		char[] abcd = new char[inputval.length()];
 

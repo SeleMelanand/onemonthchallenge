@@ -12,7 +12,7 @@ public class Day13JavaChallenge {
 	 * wereinserted in the order
 	 */
 
-	@Test
+	@Test(groups = { "javaProgram"})
 	public void printindex() {
 
 		int[] inputarr = { 5, 3, 8, 1, 9 };

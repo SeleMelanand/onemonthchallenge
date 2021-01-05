@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 public class Day15Challenge {
 
-	@Test
+	@Test(groups = { "javaProgram"})
 	public void anagramcode() {
 		String input1 = "anagram";
 		String input2 = "nagaram";
@@ -20,7 +20,6 @@ public class Day15Challenge {
 			Arrays.sort(abc);
 			Arrays.sort(def);
 			status = Arrays.equals(abc, def);
-
 		}
 		System.out.println(status);
 		if(status == true) {

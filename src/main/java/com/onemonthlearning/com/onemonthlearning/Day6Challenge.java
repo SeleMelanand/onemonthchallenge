@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class Day6Challenge extends BaseTest {
 
-	@Test
+	@Test(groups = { "seleniumProgram"})
 	public void getProductCount() {
 		launchBrowser("chrome", "https://www.myntra.com/");
 		System.out.println(driver.manage().window().getSize());
